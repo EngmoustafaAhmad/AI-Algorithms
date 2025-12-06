@@ -1,0 +1,16 @@
+rules = [
+    ({"A"}, "B"),
+    ({"B"}, "C")
+]
+
+facts = {"A"}
+
+changed = True
+while changed:
+    changed = False
+    for cond, result in rules:
+        if cond.issubset(facts) and result not in facts:
+            facts.add(result)
+            changed = True
+
+print(facts)  # {'A','B','C'}
