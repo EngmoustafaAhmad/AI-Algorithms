@@ -1,0 +1,17 @@
+rules = [
+    ({"A"}, "B"),
+    ({"B"}, "C")
+]
+
+facts = {"A"}
+
+def backward(goal):
+    if goal in facts:
+        return True
+
+    for cond, result in rules:
+        if result == goal:
+            return all(backward(c) for c in cond)
+    return False
+
+print(backward("C"))  # True
