@@ -1,0 +1,26 @@
+import heapq
+
+def best_first(start, goal, graph, h):
+    frontier = []
+    heapq.heappush(frontier, (h(start), start))
+    visited = set()
+
+    while frontier:
+        _, node = heapq.heappop(frontier)
+
+        if node == goal:
+            return True
+
+        visited.add(node)
+
+        for child in graph.get(node, []):
+            if child not in visited:
+                heapq.heappush(frontier, (h(child), child))
+
+    return False
+
+
+graph = {"A":["B","C"], "B":["D"], "C":["E"]}
+h = lambda x: {"A":3,"B":2,"C":1,"D":4,"E":0}[x]
+
+print(best_first("A","E",graph,h))  # True
